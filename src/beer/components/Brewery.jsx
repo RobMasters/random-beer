@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { goBack, push } from 'react-router-redux';
 import { Button, Icon, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
+import Loader from './Loader';
 import { fetchBrewery } from '../actions';
 import {
   getBrewery,
@@ -63,7 +64,7 @@ class Brewery extends Component {
     } = this.props;
 
     if (this.state.fetchingBrewery) {
-      return <h2>Brewing...</h2>;
+      return <Loader />;
     }
 
     return (

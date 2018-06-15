@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
-import { Spin } from 'antd';
+import Loader from './Loader';
 import { fetchBeer } from '../actions';
 import { isValidBeer } from '../helpers';
 
@@ -42,11 +42,7 @@ class RandomBeer extends Component {
       message = 'Gone to change the barrel...';
     }
 
-    return (
-      <div className="spin-wrapper">
-        <Spin size="large" tip={message} />
-      </div>
-    );
+    return <Loader message={message} />;
   }
 }
 

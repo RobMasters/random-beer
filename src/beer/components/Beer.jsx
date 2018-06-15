@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
+import Loader from './Loader';
 import { fetchBeer } from '../actions';
 import {
   beerName,
@@ -61,7 +62,7 @@ class Beer extends Component {
     } = this.props;
 
     if (this.state.fetchingBeer) {
-      return <h2>Brewing...</h2>;
+      return <Loader />;
     }
 
     return (
