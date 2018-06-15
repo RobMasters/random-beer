@@ -1,24 +1,47 @@
 import fetch from 'cross-fetch';
-import { RECEIVE_BEER } from './actionTypes';
+import { RECEIVE_BEER, RECEIVE_BREWERY } from './actionTypes';
 import { API_KEY } from '../constants';
 
-const receiveBeer = ({ name, description, breweries }) => ({
+const receiveBeer = ({ id, name, description, breweries }) => ({
   type: RECEIVE_BEER,
+  id,
   name,
   description,
   breweries,
 });
 
-const fetchBeer = () => (
+const fetchBeer = (id = 'random') => (
   dispatch => (
-    fetch(`api.brewerydb.com/v2/beer/random/?withBreweries=Y&hasLabels=Y&key=${API_KEY}`)
+    fetch(`/api.brewerydb.com/v2/beer/${id}/?withBreweries=Y&hasLabels=Y&key=${API_KEY}`)
       .then(response => response.json())
-      .then(response => (
-        dispatch(receiveBeer(response.data))
-      ))
+      .then(({ data }) => {
+        dispatch(receiveBeer(data));
+        return data;
+      })
   )
 );
 
+const receiveBrewery = ({ id, name, description, breweries }) => ({
+  type: RECEIVE_BREWERY,
+  id,
+  name,
+  description,
+  breweries,
+});
+
+const fetchBrewery = id => (
+  dispatch => (
+    fetch(`/api.brewerydb.com/v2/brewery/${id}?key=${API_KEY}`)
+      .then(response => response.json())
+      .then(({ data }) => {
+        dispatch(receiveBrewery(data));
+        return data;
+      })
+  )
+);
+
+
 export {
   fetchBeer,
+  fetchBrewery,
 };
