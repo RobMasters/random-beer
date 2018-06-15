@@ -6,6 +6,7 @@ const initialState = {
   name: '',
   description: '',
   breweries: [],
+  labels: {},
   cachedBreweries: {},
 };
 
@@ -22,6 +23,7 @@ const reducer = (state = initialState, action) => {
         id: { $set: action.id },
         name: { $set: action.name },
         description: { $set: action.description },
+        labels: { $set: action.labels },
         breweries: { $set: Object.keys(breweries) },
         cachedBreweries: { $merge: breweries },
       });

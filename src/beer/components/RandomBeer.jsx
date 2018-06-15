@@ -9,6 +9,8 @@ import { isValidBeer } from '../helpers';
 class RandomBeer extends Component {
   static propTypes = {
     fetchBeer: PropTypes.func.isRequired,
+    loadedBeer: PropTypes.func.isRequired,
+    onError: PropTypes.func.isRequired,
   };
 
   state = {
@@ -20,13 +22,16 @@ class RandomBeer extends Component {
   }
 
   fetchBeer = () => {
-    this.props.fetchBeer().then((beer) => {
-      if (!isValidBeer(beer)) {
-        console.log('Not valid. Load another beer...');
-        return this.setState(prevState => ({ brewCount: prevState.brewCount + 1 }), this.fetchBeer);
-      }
-      this.props.loadedBeer(beer);
-    });
+    this.props.fetchBeer()
+      .then((beer) => {
+        if (!isValidBeer(beer)) {
+          console.log('Not valid. Load another beer...');
+          return this.setState(prevState => ({ brewCount: prevState.brewCount + 1 }), this.fetchBeer);
+        }
+        this.props.loadedBeer(beer);
+      })
+      .catch(this.props.onError)
+    ;
   };
 
   render() {
@@ -48,6 +53,7 @@ class RandomBeer extends Component {
 const mapDispatchToProps = dispatch => ({
   fetchBeer: () => dispatch(fetchBeer()),
   loadedBeer: ({ id }) => dispatch(push(`/beer/${id}`)),
+  onError: () => dispatch(push(`/error`)),
 });
 
 export default connect(null, mapDispatchToProps)(RandomBeer);

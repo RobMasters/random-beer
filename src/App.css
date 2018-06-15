@@ -31,3 +31,7 @@
   text-align: center;
   padding: 100px 0;
 }
+
+.fit-column {
+  max-width: 100%;
+}
