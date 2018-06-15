@@ -27,6 +27,13 @@
   font-size: large;
 }
 
+.App-error {
+  text-align: center;
+}
+.App-error h1 {
+  color: #888;
+}
+
 .spin-wrapper {
   text-align: center;
   padding: 100px 0;

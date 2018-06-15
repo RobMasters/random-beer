@@ -1,9 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
-import {
-  Layout,
-} from 'antd';
+import { Layout } from 'antd';
 import { RandomBeer, Beer, Brewery } from './beer';
 import beerIcon from './beer-icon.png';
 
@@ -27,7 +25,18 @@ const App = ({ history }) => (
           <Route exact path="/" component={RandomBeer} />
           <Route path="/beer/:id" component={Beer} />
           <Route path="/brewery/:id" component={Brewery} />
-          <Route path="/error" component={() => (<h1>Something went wrong</h1>)} />
+
+          <Route
+            path="/error"
+            component={() => (
+              <div className="App-error">
+                <h1>Something went wrong</h1>
+                <Link to="/" className="App-another ant-btn ant-btn-ghost">
+                  Try again
+                </Link>
+              </div>
+            )} />
+
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
